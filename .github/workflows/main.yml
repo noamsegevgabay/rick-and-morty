@@ -7,7 +7,7 @@ on:
   pull_request:
 
 jobs:
-  setup-cluster:
+  deploy-and-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,14 +23,17 @@ jobs:
       - name: Create Kubernetes cluster
         run: kind create cluster --wait 5m
 
+      - name: Wait for Kubernetes API
+        run: |
+          for i in {1..10}; do
+            kubectl cluster-info && break || sleep 10;
+          done
+
       - name: Install kubectl
         run: |
           curl -LO "https://dl.k8s.io/release/v1.24.0/bin/linux/amd64/kubectl"
           chmod +x ./kubectl
           sudo mv ./kubectl /usr/local/bin/kubectl
-
-      - name: Check cluster status
-        run: kubectl cluster-info
 
       - name: Install Helm
         run: |
@@ -44,12 +47,6 @@ jobs:
         run: |
           kubectl rollout status deployment/flask-app
 
-  test-application:
-    runs-on: ubuntu-latest
-    needs: setup-cluster
-
-    steps:
-
       - name: Check Ingress
         run: |
           kubectl get ingress
@@ -60,10 +57,5 @@ jobs:
           curl http://rickandmorty.local/healthcheck
           curl http://rickandmorty.local/characters
 
-  cleanup:
-    runs-on: ubuntu-latest
-    needs: [setup-cluster, test-application]
-
-    steps:
       - name: Delete Kind cluster
         run: kind delete cluster
