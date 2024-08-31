@@ -24,8 +24,14 @@ jobs:
 
       - name: Install kubectl
         run: |
-          sudo snap install kubectl --classic
-          
+          curl -LO "https://dl.k8s.io/release/v1.24.0/bin/linux/amd64/kubectl"
+          chmod +x ./kubectl
+          sudo mv ./kubectl /usr/local/bin/kubectl
+
+      - name: Check cluster status
+        run: |
+          kubectl cluster-info
+
       - name: Install Helm
         run: |
           curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
@@ -38,6 +44,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: create-cluster
     steps:
+      - name: Set kubectl context
+        run: |
+          kubectl config use-context kind-kind
+
       - name: Check Ingress
         run: |
           kubectl get ingress
