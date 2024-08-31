@@ -54,7 +54,7 @@ run: |
   curl -LO "https://dl.k8s.io/release/v1.24.0/bin/linux/amd64/kubectl"
   chmod +x ./kubectl
   sudo mv ./kubectl /usr/local/bin/kubectl
-```bash
+```
 Downloads and installs kubectl for interacting with the Kubernetes cluster.
 
 6. Install Helm
