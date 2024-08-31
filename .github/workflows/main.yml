@@ -46,7 +46,8 @@ jobs:
     steps:
       - name: Set kubectl context
         run: |
-          kubectl config use-context kind-kind
+          kubectl config use-context kind-kind || exit 1
+          kubectl config current-context
 
       - name: Check Ingress
         run: |
