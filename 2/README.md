@@ -12,14 +12,14 @@
 - **Method**: `GET`
 - **Description**: Fetches a list of human characters who are alive and originated from Earth.
 - **Response**: Returns a JSON array of characters, each with `Name`, `Location`, and `Image`.
-#### Example Request:
+## Example Request:
 # curl http://localhost:5000/characters
 
 ### 2. /healthcheck
 # Method: GET
 # Description: Returns the health status of the application.
 # Response: Returns a JSON object indicating the status of the application.
-#### Example Request:
+## Example Request:
 # curl http://localhost:5000/healthcheck
 
 # Test the Endpoints
