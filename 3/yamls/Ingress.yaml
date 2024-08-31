@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: flask-app-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - host: rickandmorty.local
+      http:
+        paths:
+          - path: /characters
+            pathType: Prefix
+            backend:
+              service:
+                name: flask-app-service
+                port:
+                  number: 80
+          - path: /healthcheck
+            pathType: Prefix
+            backend:
+              service:
+                name: flask-app-service
+                port:
+                  number: 80

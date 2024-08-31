@@ -1,0 +1,22 @@
+replicaCount: 1
+
+image:
+  repository: noamsegevgabay/rickandmorty-flask-app
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  name: flask-app-ingress
+  className: nginx
+  host: rickandmorty.local
+  path: /
+  tls: []
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+
+resources: {}

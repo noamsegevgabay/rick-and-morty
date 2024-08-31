@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rickandmorty-flask-app
+  labels:
+    app: rickandmorty-flask-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rickandmorty-flask-app
+  template:
+    metadata:
+      labels:
+        app: rickandmorty-flask-app
+    spec:
+      containers:
+      - name: rickandmorty-flask-app
+        image: noamsegevgabay/rickandmorty-flask-app:latest
+        ports:
+        - containerPort: 5000
