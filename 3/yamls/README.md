@@ -12,24 +12,24 @@ In the `yamls` folder, you will find the following Kubernetes manifests:
 ```bash
 minikube start
 ```
-1. **Apply the Deployment**
+# **Apply the Deployment**
 
    ```bash
 kubectl apply -f yamls/
 ```
-2. **Add the Minikube IP to your /etc/hosts file for local DNS resolution**
-   ```bash
+# **Add the Minikube IP to your /etc/hosts file for local DNS resolution**
+```bash
 MINIKUBE_IP=$(minikube ip)
 echo "$MINIKUBE_IP rickandmorty.local" | sudo tee -a /etc/hosts
 ```
-3. **Verify the deployment, service, and ingress**
-   ```bash
+# **Verify the deployment, service, and ingress**
+```bash
 kubectl get deployments
 kubectl get services
 kubectl get ingress
 ```
-4. **Access the application using the Ingress host**
-   ```bash
+# **Access the application using the Ingress host**
+```bash
 curl http://rickandmorty.local/characters
 curl http://rickandmorty.local/healthcheck
 ```
