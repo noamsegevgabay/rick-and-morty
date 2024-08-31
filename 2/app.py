@@ -28,7 +28,18 @@ def characters():
 
 @app.route('/healthcheck', methods=['GET'])
 def healthcheck():
-    return jsonify({'status': 'ok'})
+    try:
+        # Perform a request to the /characters endpoint
+        response = requests.get('http://localhost:5000/characters')
+        
+        # Check if the request was successful
+        if response.status_code == 200:
+            return jsonify({'status': 'ok'})
+        else:
+            return jsonify({'status': 'error', 'message': 'Failed to fetch characters'}), 500
+    except requests.RequestException as e:
+        # Handle request exceptions
+        return jsonify({'status': 'error', 'message': str(e)}), 500
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
