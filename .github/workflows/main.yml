@@ -38,7 +38,7 @@ jobs:
 
       - name: Deploy application with Helm
         run: |
-          helm upgrade --install flask-app ./helm --wait
+          helm upgrade --install flask-app ./4/helm/flask-app --wait
 
       - name: Wait for application to be ready
         run: |
