@@ -20,95 +20,84 @@ The workflow is triggered on `push` to the `main` branch and on `pull_request` e
 
 **Steps**:
 
-1. **Checkout code**
-   ```bash
+1. Checkout code
+```bash
    uses: actions/checkout@v2
 Checks out the repository code.
+```
 
-Install Kind
-
-bash
-Copy code
+2. Install Kind
+```bash
 run: |
   curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.11.1/kind-linux-amd64
   chmod +x ./kind
   sudo mv ./kind /usr/local/bin/kind
 Downloads and installs Kind for creating a Kubernetes cluster.
+```
 
-Create Kubernetes cluster
-
-bash
-Copy code
+3. Create Kubernetes cluster
+```bash
 run: kind create cluster --wait 5m
-Creates a Kubernetes cluster using Kind and waits for 5 minutes.
+```
 
-Wait for Kubernetes API
-
-bash
-Copy code
+4. Wait for Kubernetes API
+```bash
 run: |
   for i in {1..10}; do
     kubectl cluster-info && break || sleep 10;
   done
-Waits for the Kubernetes API to be accessible.
+```
 
-Install kubectl
-
-bash
-Copy code
+5. Install kubectl
+```bash
 run: |
   curl -LO "https://dl.k8s.io/release/v1.24.0/bin/linux/amd64/kubectl"
   chmod +x ./kubectl
   sudo mv ./kubectl /usr/local/bin/kubectl
+```bash
 Downloads and installs kubectl for interacting with the Kubernetes cluster.
 
-Install Helm
-
-bash
-Copy code
+6. Install Helm
+```bash
 run: |
   curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 Downloads and installs Helm for managing Kubernetes applications.
+```
 
-Deploy application with Helm
-
-bash
-Copy code
+7. Deploy application with Helm
+```bash
 run: |
   helm upgrade --install flask-app ./4/helm/flask-app --wait
 Deploys the Flask application using Helm.
+```
 
-Wait for application to be ready
-
-bash
-Copy code
+8. Wait for application to be ready
+```bash
 run: |
   kubectl rollout status deployment/flask-app
 Waits for the Flask application deployment to be rolled out successfully.
+```
 
-Port Forwarding
-
-bash
-Copy code
+9. Port Forwarding
+```bash
 run: |
   kubectl port-forward svc/flask-app 8080:80 &
 Sets up port forwarding to access the application locally.
+```
 
-Test application endpoints
-
-bash
-Copy code
+10. Test application endpoints
+```bash
 run: |
   curl http://localhost:8080/healthcheck
   curl http://localhost:8080/characters
 Tests the /healthcheck and /characters endpoints of the application.
+```
 
-Delete Kind cluster
-
-bash
-Copy code
+11.Delete Kind cluster
+```bash
 run: kind delete cluster
 Deletes the Kind Kubernetes cluster after testing.
+```
 
 Usage
 To use this workflow, ensure that:
@@ -116,8 +105,3 @@ To use this workflow, ensure that:
 The repository has the required Helm chart for deploying the application.
 The workflow file is located in the .github/workflows/ directory of your repository.
 The workflow will automatically run on pushes to the main branch and on pull requests, deploying and testing the Flask application in a Kubernetes cluster.
-
-sql
-Copy code
-
-Feel free to copy and paste this into your `README.md` file.
