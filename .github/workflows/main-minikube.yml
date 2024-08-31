@@ -1,0 +1,61 @@
+name: Deploy and Test Application
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  create-and-test-cluster:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Minikube
+        run: |
+          curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+          chmod +x minikube
+          sudo mv minikube /usr/local/bin/
+
+      - name: Start Minikube
+        run: |
+          minikube start --driver=docker
+
+      - name: Install kubectl
+        run: |
+          curl -LO "https://dl.k8s.io/release/v1.24.0/bin/linux/amd64/kubectl"
+          chmod +x ./kubectl
+          sudo mv ./kubectl /usr/local/bin/kubectl
+
+      - name: Set kubectl context
+        run: |
+          kubectl config use-context minikube
+
+      - name: Install Helm
+        run: |
+          curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
+      - name: Deploy application with Helm
+        run: |
+          helm upgrade --install flask-app ./4/helm/flask-app --wait
+
+      - name: Wait for application to be ready
+        run: |
+          kubectl rollout status deployment/flask-app
+
+      - name: Check Ingress
+        run: |
+          kubectl get ingress
+          kubectl describe ingress flask-app-ingress
+
+      - name: Test application endpoints
+        run: |
+          curl http://rickandmorty.local/healthcheck
+          curl http://rickandmorty.local/characters
+
+      - name: Delete Minikube cluster
+        run: |
+          minikube delete
