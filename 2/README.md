@@ -19,8 +19,8 @@ curl http://localhost:5000/characters
 ```
 ### 2. /healthcheck
 # Method: GET
-## Description: Returns the health status of the application.
-## Response: Returns a JSON object indicating the status of the application.
+### Description: Returns the health status of the application.
+### Response: Returns a JSON object indicating the status of the application.
 ## Example Request:
 ```bash
 curl http://localhost:5000/healthcheck
