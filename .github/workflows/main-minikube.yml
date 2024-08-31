@@ -46,6 +46,14 @@ jobs:
         run: |
           kubectl rollout status deployment/flask-app
 
+      - name: Get Minikube IP
+        id: get-minikube-ip
+        run: echo "MINIKUBE_IP=$(minikube ip)" >> $GITHUB_ENV
+
+      - name: Update /etc/hosts for local testing
+        run: |
+          sudo sh -c "echo '${{ env.MINIKUBE_IP }} rickandmorty.local' >> /etc/hosts"
+
       - name: Check Ingress
         run: |
           kubectl get ingress
