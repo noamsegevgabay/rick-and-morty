@@ -13,8 +13,9 @@
 - **Description**: Fetches a list of human characters who are alive and originated from Earth.
 - **Response**: Returns a JSON array of characters, each with `Name`, `Location`, and `Image`.
 ## Example Request:
-# curl http://localhost:5000/characters
-
+```bash
+curl http://localhost:5000/characters
+```
 ### 2. /healthcheck
 # Method: GET
 # Description: Returns the health status of the application.
