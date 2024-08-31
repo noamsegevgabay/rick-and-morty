@@ -52,7 +52,8 @@ jobs:
 
       - name: Update /etc/hosts for local testing
         run: |
-          sudo sh -c "echo '${{ env.MINIKUBE_IP }} rickandmorty.local' >> /etc/hosts"
+          echo "${{ env.MINIKUBE_IP }} rickandmorty.local" | sudo tee -a /etc/hosts
+          cat /etc/hosts
 
       - name: Check Ingress
         run: |
