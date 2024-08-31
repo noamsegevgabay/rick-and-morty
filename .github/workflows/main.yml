@@ -47,15 +47,14 @@ jobs:
         run: |
           kubectl rollout status deployment/flask-app
 
-      - name: Check Ingress
+      - name: Port Forwarding
         run: |
-          kubectl get ingress
-          kubectl describe ingress flask-app-ingress
+          kubectl port-forward svc/flask-app 8080:80 &
 
       - name: Test application endpoints
         run: |
-          curl http://rickandmorty.local/healthcheck
-          curl http://rickandmorty.local/characters
+          curl http://localhost:8080/healthcheck
+          curl http://localhost:8080/characters
 
       - name: Delete Kind cluster
         run: kind delete cluster
