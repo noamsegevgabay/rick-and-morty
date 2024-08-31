@@ -49,8 +49,6 @@ jobs:
     needs: setup-cluster
 
     steps:
-      - name: Set kubectl context
-        run: kubectl config use-context kind-kind || exit 1
 
       - name: Check Ingress
         run: |
