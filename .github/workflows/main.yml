@@ -26,9 +26,13 @@ jobs:
         run: |
           sudo snap install kubectl --classic
           
-      - name: Deploy application to Kubernetes
+      - name: Install Helm
         run: |
-          kubectl apply -f yamls/
+          curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
+      - name: Deploy application with Helm
+        run: |
+          helm upgrade --install flask-app ./4/helm/flask-app --wait
 
   test-application:
     runs-on: ubuntu-latest
