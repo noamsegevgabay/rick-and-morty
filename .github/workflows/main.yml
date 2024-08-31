@@ -38,6 +38,11 @@ jobs:
     runs-on: ubuntu-latest
     needs: create-cluster
     steps:
+      - name: Check Ingress
+        run: |
+          kubectl get ingress
+          kubectl describe ingress flask-app-ingress
+
       - name: Test application endpoints
         run: |
           curl http://rickandmorty.local/healthcheck
