@@ -2,9 +2,10 @@
 
 ## This project is a Flask application that queries the Rick and Morty API for characters who are human, alive, and originated from Earth. It provides REST API endpoints to fetch this data and a health check endpoint.
 
-
-## docker build -t noamsegevgabay/rickandmorty-flask-app .
-## docker run -d -p 5000:5000 --name rickandmorty-flask-app rickandmorty-flask-app
+```bash
+docker build -t noamsegevgabay/rickandmorty-flask-app .
+docker run -d -p 5000:5000 --name rickandmorty-flask-app rickandmorty-flask-app
+```
 
  ## REST API Endpoints
  
@@ -21,8 +22,11 @@ curl http://localhost:5000/characters
 # Description: Returns the health status of the application.
 # Response: Returns a JSON object indicating the status of the application.
 ## Example Request:
-# curl http://localhost:5000/healthcheck
-
+```bash
+curl http://localhost:5000/healthcheck
+```
 # Test the Endpoints
-# curl http://localhost:5000/healthcheck
-# curl http://localhost:5000/characters
+```bash
+curl http://localhost:5000/healthcheck
+curl http://localhost:5000/characters
+```
